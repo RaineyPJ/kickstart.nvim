@@ -1,7 +1,7 @@
 -- Oil
 
 vim.pack.add { 'https://github.com/stevearc/oil.nvim' }
-require('nvim-autopairs').setup {
+require('oil').setup {
   view_options = {
     show_hidden = true
   }
