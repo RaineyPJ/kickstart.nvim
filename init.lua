@@ -127,16 +127,6 @@ do
   vim.keymap.set('n', '#', '*N')
   vim.keymap.set('n', '<leader>/', '<cmd>nohlsearch<CR>')
 
-  -- Diagnostic keymaps
-  vim.keymap.set('n', '<leader>j', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-  vim.keymap.set('n', '<leader>k', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-  vim.keymap.set('n', '<leader>c', vim.diagnostic.setloclist, { desc = 'Open diagnostic [C]uickfix list' })
-  vim.keymap.set('n', '<leader>vt', function()
-    local new_config = not vim.diagnostic.config().virtual_text
-    vim.diagnostic.config({ virtual_text = new_config })
-  end, { desc = 'Toggle diagnostic [V]irtual_[T]ext' })
-
   -- Diagnostic Config & Keymaps
   --  See `:help vim.diagnostic.Opts`
   vim.diagnostic.config {
@@ -161,7 +151,14 @@ do
     },
   }
 
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+  vim.keymap.set('n', '<leader>c', vim.diagnostic.setloclist, { desc = 'Open diagnostic [C]uickfix list' })
+  vim.keymap.set('n', '<leader>j', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+  vim.keymap.set('n', '<leader>k', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+  vim.keymap.set('n', '<leader>vt', function()
+    local new_config = not vim.diagnostic.config().virtual_text
+    vim.diagnostic.config({ virtual_text = new_config })
+  end, { desc = 'Toggle diagnostic [V]irtual_[T]ext' })
 
   vim.keymap.set('n', '<leader>t', ':e term://C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe<CR>')
   -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
