@@ -22,13 +22,6 @@ do
   -- Enable faster startup by caching compiled Lua modules
   vim.loader.enable()
 
-
-  -- Make line numbers default
-  vim.o.number = true
-  -- You can also add relative line numbers, to help with jumping.
-  --  Experiment for yourself to see if you like it!
-  vim.o.relativenumber = true
-
   -- Set <space> as the leader key
   -- See `:help mapleader`
   --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -43,11 +36,17 @@ do
   -- NOTE: You can change these options as you wish!
   --  For more options, you can see `:help option-list`
 
+  -- Make line numbers default
+  vim.o.number = true
+  -- You can also add relative line numbers, to help with jumping.
+  --  Experiment for yourself to see if you like it!
+  -- vim.o.relativenumber = true
+
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
 
   -- Don't show the mode, since it's already in the status line
-  -- vim.o.showmode = false
+  vim.o.showmode = false
 
   -- Sync clipboard between OS and Neovim.
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -105,27 +104,10 @@ do
 
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
-  vim.keymap.set('n', '<leader>q', ':q<CR>')
-  vim.keymap.set('n', '<leader>o', ':only<CR>')
-  vim.keymap.set('i', 'jk', '<ESC>')
-  vim.keymap.set('n', '<C-s>', ':w<CR>')
-  vim.keymap.set('n', '<C-a>', ':wall<CR>')
 
   -- Clear highlights on search when pressing <Esc> in normal mode
   --  See `:help hlsearch`
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
-  -- Use visual mode selection to search
-  vim.keymap.set('v', '<Leader>/', 'y/<C-R>"<CR>')
-
-  -- Add a Stamp command that pastes over the top of the current word
-  -- This throws away the word that is deleted as we don't want to clobber
-  -- the " register because we are likely to want to Stamp again.
-  vim.keymap.set('n', 'S', '"_ciw<C-R>"<esc>')
-
-  -- Set highlight on search, but clear on pressing <Esc> in normal mode
-  vim.keymap.set('n', '#', '*N')
-  vim.keymap.set('n', '<leader>/', '<cmd>nohlsearch<CR>')
 
   -- Diagnostic Config & Keymaps
   --  See `:help vim.diagnostic.Opts`
@@ -151,23 +133,15 @@ do
     },
   }
 
-  vim.keymap.set('n', '<leader>c', vim.diagnostic.setloclist, { desc = 'Open diagnostic [C]uickfix list' })
-  vim.keymap.set('n', '<leader>j', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-  vim.keymap.set('n', '<leader>k', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-  vim.keymap.set('n', '<leader>vt', function()
-    local new_config = not vim.diagnostic.config().virtual_text
-    vim.diagnostic.config({ virtual_text = new_config })
-  end, { desc = 'Toggle diagnostic [V]irtual_[T]ext' })
+  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
-  vim.keymap.set('n', '<leader>t', ':e term://C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe<CR>')
   -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
   -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
   -- is not what someone will guess without a bit more experience.
   --
   -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
   -- or just use <C-\><C-n> to exit terminal mode
-  vim.keymap.set('t', 'jk', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+  vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
   -- TIP: Disable arrow keys in normal mode
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -461,18 +435,17 @@ do
 
   -- See `:help telescope.builtin`
   local builtin = require 'telescope.builtin'
-  vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-  vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]ind in [G]it files'})
-  vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-  vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-  vim.keymap.set({ 'n', 'v' }, '<leader>fw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-  vim.keymap.set('n', '<leader>fr', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-  vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-  -- vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[S]earch [R]esume' })
-  vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-  vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = '[S]earch [C]ommands' })
-  vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[ ] Find existing buffers' })
+  vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+  vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+  vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+  vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+  vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+  vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+  vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+  vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+  vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+  vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
+  vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
   -- If you later switch picker plugins, this is where to update these mappings.
@@ -509,7 +482,7 @@ do
   })
 
   -- Override default behavior and theme when searching
-  vim.keymap.set('n', '<leader>fl', function()
+  vim.keymap.set('n', '<leader>/', function()
     -- You can pass additional configuration to Telescope to change the theme, layout, etc.
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
       winblend = 10,
@@ -521,7 +494,7 @@ do
   --  See `:help telescope.builtin.live_grep()` for information about particular keys
   vim.keymap.set(
     'n',
-    '<leader>f/',
+    '<leader>s/',
     function()
       builtin.live_grep {
         grep_open_files = true,
@@ -532,7 +505,7 @@ do
   )
 
   -- Shortcut for searching your Neovim configuration files
-  vim.keymap.set('n', '<leader>fn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+  vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
 end
 
 -- ============================================================
@@ -590,9 +563,6 @@ do
       -- Rename the variable under your cursor.
       --  Most Language Servers support renaming across files, etc.
       map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-
-      -- Display hover information
-      map('grh', vim.lsp.buf.hover, '[H]over')
 
       -- Execute a code action, usually your cursor needs to be on top of an error
       -- or a suggestion from your LSP for this to activate.
@@ -931,6 +901,10 @@ do
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   require 'custom.plugins'
+
+  -- [[ Personal customisations ]]
+  vim.o.relativenumber = true -- upstream default is false
+  require 'custom.keymaps'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
